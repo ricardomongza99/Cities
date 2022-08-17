@@ -22,13 +22,13 @@ struct CityCard: View {
             .foregroundColor(.white)
             
             HStack {
-                Label(city.favoriteCount.formatted(), systemImage: "heart.fill")
-                Label(city.travelCount.formatted(), systemImage: "airplane")
+                metricsLabel(count: city.favoriteCount, systemImage: "heart.fill")
+                metricsLabel(count: city.travelCount, systemImage: "airplane")
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
-        .background(.cyan)
+        .background(backgroundImage)
         .cornerRadius(16)
         .shadow(color: .gray, radius: 8, x: 4, y: 4)
     }
@@ -38,6 +38,34 @@ struct CityCard_Previews: PreviewProvider {
     static let city = CityAPI.getCities()[2]
     static var previews: some View {
         CityCard(city: city)
+            .padding(40)
+            .previewLayout(.fixed(width: 480, height: 300))
+    }
+}
+
+extension CityCard {
+    
+    private var backgroundImage: some View {
+        ZStack {
+            Image(city.image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+            LinearGradient(
+                gradient: Gradient(colors: [Color(white: 0, opacity: 0.75), .clear]),
+                startPoint: .topLeading,
+                endPoint: UnitPoint(x: 0.4, y: 1.0)
+            )
+        }
+    }
+    
+    private func metricsLabel(count: Int, systemImage: String) -> some View {
+        Label(count.formatted(.shorthand), systemImage: systemImage)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .font(.caption)
+            .background(.white)
+            .cornerRadius(8)
+            .foregroundColor(.gray)
     }
 }
 
