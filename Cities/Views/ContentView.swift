@@ -16,7 +16,7 @@ struct ContentView: View {
             ScrollView {
                 LazyVStack(spacing: 16) {
                     ForEach(cities) { city in
-                        Text("\(city.name), \(city.country)")
+                        CityCard(city: city)
                     }
                 }
                 .padding(.horizontal)
